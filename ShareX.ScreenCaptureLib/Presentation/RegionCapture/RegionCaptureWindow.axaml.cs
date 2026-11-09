@@ -100,6 +100,7 @@ public partial class RegionCaptureWindow : Window
     // Until the user interacts with the capture, the toolbar follows the pointer to whichever monitor it is on.
     private bool _captureToolbarFollowsPointer = true;
     private PixelRect _captureToolbarScreenBounds;
+    private double _captureToolbarScale = 1;
     private int _imageWidth;
     private int _imageHeight;
     private bool _regionToolActive = true;
@@ -372,6 +373,15 @@ public partial class RegionCaptureWindow : Window
         {
             _annotationToolbar.IsCompact = true;
             _annotationToolbar.MainToolbarCornerRadius = new CornerRadius(3);
+        }
+
+        _captureToolbarScale = Math.Clamp(_request.RegionCaptureOptions.ToolbarScale,
+            RegionCaptureOptions.ToolbarScaleMinimum, RegionCaptureOptions.ToolbarScaleMaximum) / 100d;
+        if (Math.Abs(_captureToolbarScale - 1) > 0.001)
+        {
+            // Scale from the top centre so the toolbar stays anchored where it is positioned.
+            _captureToolbar.RenderTransformOrigin = new RelativePoint(0.5, 0, RelativeUnit.Relative);
+            _captureToolbar.RenderTransform = new ScaleTransform(_captureToolbarScale, _captureToolbarScale);
         }
 
         _regionInputSurface.Width = _imageWidth;
@@ -989,9 +999,12 @@ public partial class RegionCaptureWindow : Window
         }
 
         _positionedCaptureToolbarSize = new Size(toolbarWidth, toolbarHeight);
-        double maxLeft = Math.Max(0, ClientSize.Width - toolbarWidth);
-        double maxTop = Math.Max(0, ClientSize.Height - toolbarHeight);
-        AvaloniaCanvas.SetLeft(_captureToolbar, Math.Clamp(_captureToolbarCenterX - toolbarWidth / 2d, 0, maxLeft));
+        // The toolbar is scaled from its top centre, so its drawn width is toolbarWidth * scale around the same centre.
+        double overhang = toolbarWidth * (_captureToolbarScale - 1) / 2d;
+        double minLeft = Math.Max(0, overhang);
+        double maxLeft = Math.Max(minLeft, ClientSize.Width - toolbarWidth - overhang);
+        double maxTop = Math.Max(0, ClientSize.Height - toolbarHeight * _captureToolbarScale);
+        AvaloniaCanvas.SetLeft(_captureToolbar, Math.Clamp(_captureToolbarCenterX - toolbarWidth / 2d, minLeft, maxLeft));
         AvaloniaCanvas.SetTop(_captureToolbar, Math.Clamp(_captureToolbarTop, 0, maxTop));
     }
 

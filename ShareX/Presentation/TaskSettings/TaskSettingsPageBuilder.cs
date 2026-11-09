@@ -529,6 +529,7 @@ internal sealed class TaskSettingsPageBuilder
                 Row(Strings.TaskSettingsWindow_BackgroundDimStrengthPercent, Number(() => options.BackgroundDimStrength, value => options.BackgroundDimStrength = (int)value, 0, 100)),
                 Check(Strings.TaskSettingsWindow_DimHoveredWindowsAndControls, () => options.DimAllExceptSelection, value => options.DimAllExceptSelection = value),
                 Check(Strings.TaskSettingsWindow_CompactRegionCaptureToolbar, () => options.CompactToolbar, value => options.CompactToolbar = value),
+                Row(Strings.TaskSettingsWindow_RegionCaptureToolbarScalePercent, Number(() => options.ToolbarScale, value => options.ToolbarScale = (int)value, RegionCaptureOptions.ToolbarScaleMinimum, RegionCaptureOptions.ToolbarScaleMaximum)),
                 Button(Strings.TaskSettingsWindow_CustomizeToolbarWithEllipsis, () => _window.ShowRegionCaptureToolbarEditor(options))),
             EnabledCard(_captureOverride, Strings.TaskSettingsWindow_MouseActions,
                 Row(Strings.TaskSettingsWindow_RightClick, EnumCombo(() => options.RegionCaptureActionRightClick, value => options.RegionCaptureActionRightClick = value)),

@@ -2479,6 +2479,10 @@ Do you want to abort the active screen recording?</value>
     <value>Compact region capture toolbar</value>
     <comment>Checkbox that makes the region capture toolbar use the smaller, denser layout of ShareX version 21.</comment>
   </data>
+  <data name="TaskSettingsWindow_RegionCaptureToolbarScalePercent" xml:space="preserve">
+    <value>Toolbar size (%)</value>
+    <comment>Label of a numeric field that scales the region capture toolbar and its buttons, as a percentage of the normal size.</comment>
+  </data>
   <data name="TaskSettingsWindow_ConfigureWithEllipsis" xml:space="preserve">
     <value>Configure...</value>
   </data>

@@ -33,6 +33,8 @@ namespace ShareX.ScreenCaptureLib
     {
         public const int MinimumSize = 5;
         public const int InputDelay = 500;
+        public const int ToolbarScaleMinimum = 50;
+        public const int ToolbarScaleMaximum = 200;
         public const int MagnifierSizeMinimum = 50;
         public const int MagnifierSizeMaximum = 500;
         public const int MagnifierPixelCountMinimum = 3;
@@ -50,6 +52,8 @@ namespace ShareX.ScreenCaptureLib
         public bool DimAllExceptSelection = false;
         public List<ImageEditorToolbarItemOptions> ToolbarItems = new List<ImageEditorToolbarItemOptions>();
         public bool CompactToolbar = false;
+        // Size of the region capture toolbar as a percentage of its normal size.
+        public int ToolbarScale = 100;
 
         public RegionCaptureAction RegionCaptureActionRightClick = RegionCaptureAction.RemoveShapeCancelCapture;
         public RegionCaptureAction RegionCaptureActionMiddleClick = RegionCaptureAction.SwapToolType;
